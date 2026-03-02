@@ -31,5 +31,40 @@
  *   // => { totalRuns: 0, totalBalls: 0, wickets: 0, fours: 0, sixes: 0 }
  */
 export function cricketScoreboard(balls) {
-  // Your code here
-}
+  // Validation check
+  if (!Array.isArray(balls) || balls.length === 0) {
+    return { totalRuns: 0, totalBalls: 0, wickets: 0, fours: 0, sixes: 0 };
+  }
+
+  let totalRuns = 0;
+  let totalBalls = 0;
+  let wickets = 0;
+  let fours = 0;
+  let sixes = 0;
+
+  for (let i = 0; i < balls.length; i++) {
+    const ball = balls[i];
+
+    // Count the ball
+    totalBalls++;
+
+    if (ball === -1) {
+      // Wicket
+      wickets++;
+      if (wickets === 10) {
+        break; // Innings over
+      }
+    } else if (ball >= 1 && ball <= 6) {
+      // Runs scored
+      totalRuns += ball;
+      if (ball === 4) {
+        fours++;
+      } else if (ball === 6) {
+        sixes++;
+      }
+    }
+    // Dot balls (0) do not add to runs but are counted in totalBalls
+  }
+
+  return { totalRuns, totalBalls, wickets, fours, sixes };
+} 

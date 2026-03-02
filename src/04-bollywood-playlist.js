@@ -34,5 +34,29 @@
  *   // => { count: 2, totalDuration: 300 }
  */
 export function buildPlaylist(songs, maxDuration) {
-  // Your code here
+  // Validation checks
+  if (!Array.isArray(songs) || typeof maxDuration !== 'number' || maxDuration <= 0) {
+    return { count: 0, totalDuration: 0 };
+  }
+
+  let count = 0;
+  let totalDuration = 0;
+  let index = 0;
+
+  while (index < songs.length) {
+    const songDuration = songs[index];
+
+    // Check if song duration is a positive number
+    if (typeof songDuration === 'number' && songDuration > 0) {
+      // Check if adding this song exceeds maxDuration
+      if (totalDuration + songDuration > maxDuration) {
+        break; // Stop adding more songs
+      }
+      totalDuration += songDuration; // Add song duration to total
+      count++; // Increment count of songs added
+    }
+    // Move to the next song
+    index++;
+  }
+  return { count, totalDuration };  
 }

@@ -30,5 +30,30 @@
  *   // => { items: [], totalBill: 0 }
  */
 export function sabziMandiBill(shoppingList, priceList) {
-  // Your code here
+  const result = { items: [],
+    totalBill: 0
+  };
+
+  // Validation checks
+  if (!Array.isArray(shoppingList) || typeof priceList !== 'object' || priceList === null) {
+    return result; // Return empty bill for invalid input
+  }
+
+  for (const item of shoppingList) {
+    const { name, qty } = item;
+
+    // Check if the vegetable is available in priceList
+    if (priceList.hasOwnProperty(name)) {
+      const pricePerKg = priceList[name];
+
+      // Check if the price is within Amma's budget
+      if (pricePerKg <= 80) {
+        const cost = pricePerKg * qty;
+        result.items.push({ name, qty, cost });
+        result.totalBill += cost;
+      }
+    }
+  }
+
+  return result;  
 }
